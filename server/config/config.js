@@ -21,7 +21,7 @@ if ( process.env.NODE_ENV === 'dev' ) {
     urlDB = 'mongodb://localhost:27017/EstudiantesCUR';
 
 } else {
-    urlDB = 'mongodb+srv://adminAtlasCUR:Andresfabian782@cluster0.x5nqo.mongodb.net/EstudiantesCUR';
+    urlDB = process.env.MONGO_URI;
 }
 
 process.env.URLDB = urlDB;
