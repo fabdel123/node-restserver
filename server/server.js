@@ -14,10 +14,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-
-app.use( require('./routes/usuario') );
-
-
 // Configurar CORS (Para que permita hacer peticiones tanto entrantes como salientes)
 //    app.use(cors({
 //        origin: 'http://localhost:8100',
@@ -25,6 +21,8 @@ app.use( require('./routes/usuario') );
 //        allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
 //    }));
 
+//Configuración Global de Rutas
+app.use( require('./routes/index') );
 
 mongoose.connect(process.env.URLDB,
     {
