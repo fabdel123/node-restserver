@@ -15,11 +15,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Configurar CORS (Para que permita hacer peticiones tanto entrantes como salientes)
-   app.use(cors({
-       origin: 'http://localhost:8100',
-       methods: ['POST','PUT','GET','DELETE','OPTIONS'],
-       allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
-   }));
+//    app.use(cors({
+//        origin: 'http://localhost:8100',
+//        methods: ['POST','PUT','GET','DELETE','OPTIONS'],
+//        allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
+//    }));
 
 //Configuración Global de Rutas
 app.use( require('./routes/index') );
