@@ -39,23 +39,20 @@ app.post('/login',(req, res) => {
             });
         }
 
-// Genera un token único para la seguridad de ingreso del estudiante
-let token = jwt.sign({
-    usuario: usuarioDB
-}, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
+// // Genera un token único para la seguridad de ingreso del estudiante
+// let token = jwt.sign({
+//     usuario: usuarioDB
+// }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
 
-        res.json({
-            ok:true,
-            usuario: usuarioDB,
-            token
-        });
+//         res.json({
+//             ok:true,
+//             usuario: usuarioDB,
+//             token
+//         });
 
     });
 
 });
-
-
-
 
 module.exports = app;
