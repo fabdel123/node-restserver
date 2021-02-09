@@ -13,11 +13,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Configurar CORS (Para que permita hacer peticiones tanto entrantes como salientes)
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://rest-server-cur782.herokuapp.com"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "https://rest-server-cur782.herokuapp.com"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+//   });
 
 //Configuración Global de Rutas
 app.use( require('./routes/index') );
