@@ -44,16 +44,6 @@ let usuarioSchema = new Schema({
         required: [true, 'La contraseña es necesaria']
     },
 
-    // img: {
-    //     type: String,
-    //     required: false
-    // },
-
-    // avatar: {
-    //     type: String,
-    //     default: 'usuario.jpg'
-    // },
-
     role: {
         type: String,
         default: 'STUDENT_ROLE',
