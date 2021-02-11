@@ -1,18 +1,16 @@
 const express = require('express');
-
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
-
 const Usuario = require('../models/usuario');
-// const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
+
 // const { verificaToken } = require('../middlewares/autenticacion');
 
 const app = express();
 
 
-//Petición GET
+//PETICIÓN GET
 // app.get('/usuario', verificaToken, (req, res) => {
-app.get('/usuario', (req, res) => {
+   app.get('/usuario', function (req, res, next)  {
 
     // Controla desde que pagina envía la paginación
     let desde = req.query.desde || 0;
@@ -48,9 +46,9 @@ app.get('/usuario', (req, res) => {
     });
 
 });
-
-// app.post('/usuario', [verificaToken, verificaAdmin_Role], function (req, res) {
-   app.post('/usuario', function (req, res) {
+// PETICIÓN POST
+// app.post('/usuario', verificaToken, function(req, res) {
+    app.post('/usuario', function (req, res, next) {
 
     let body = req.body;
 
@@ -73,10 +71,6 @@ app.get('/usuario', (req, res) => {
             });
         }
 
-
-        // usuario.password = null;
-
-
         res.json({
             ok: true,
             usuario: usuarioDB
@@ -85,9 +79,9 @@ app.get('/usuario', (req, res) => {
 });
 
 
-//Petición PUT
-// app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, res) {
-app.put('/usuario/:id', function (req, res) {
+//PETICIÓN PUT
+// app.put('/usuario/:id', [verificaToken], function (req, res) {
+app.put('/update/:id', function (req, res, next) {
 
     let id = req.params.id;
     let body = _.pick( req.body, ['nombres', 'apellidos', 'email', 'codigo', 'role', 'estado'] );
@@ -113,17 +107,15 @@ app.put('/usuario/:id', function (req, res) {
 });
 
 
-//Petición DELETE
-    // app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, res) {
-    app.delete('/usuario/:id', function (req, res) {
-
+//PETICIÓN DELETE
+    // app.delete('/usuario/:id', [verificaToken], function (req, res) {
+    app.delete('/delete/:id', function (req, res, next) {
         let id = req.params.id;
         let cambiarEstado = {
             estado: false
         };
 
         Usuario.findByIdAndUpdate(id, cambiarEstado, { new: true }, (err, estadoUsuario) => {
-
 
             res.json({
                 ok: true,

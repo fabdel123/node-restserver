@@ -1,19 +1,23 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Usuario = require('../models/usuario');
 const app = express();
+
+
 
 app.post('/login', function (req, res)  {
 
     let body = req.body;
 
-    // console.log(Usuario.findOne({ email: body.email }, (err, usuarioDB)));
-
     Usuario.findOne({ email: body.email }, (err, usuarioDB) => {
 
-       console.log(usuarioDB);
-        //console.log(err);
-        //console.log(res);
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
 
         if (!usuarioDB) {
             return res.status(400).json({
@@ -34,19 +38,16 @@ app.post('/login', function (req, res)  {
             });
         }
 
-        if (err) {
-            return res.status(500).json({
-                ok: false,
-                err: {
-                    message: 'Error de conexión con BD'
-                }
-            });
-        }
+        let token = jwt.sign({
+            usuario: usuarioDB
+        }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
         res.json({
             ok: true,
-            usuario: usuarioDB
+            usuario: usuarioDB,
+            token
         });
+
 
     });
 
