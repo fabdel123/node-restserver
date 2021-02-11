@@ -48,35 +48,39 @@ const app = express();
 });
 // PETICIÓN POST
 // app.post('/usuario', verificaToken, function(req, res) {
-    app.post('/usuario', function (req, res, next) {
+    app.post('/usuario', function (req, res) {
 
-    let body = req.body;
+        let body = req.body;
 
-    let usuario = new Usuario({
+        let usuario = new Usuario({
 
-        nombres: body.nombres,
-        apellidos: body.apellidos,
-        codigo: body.codigo,
-        email: body.email,
-        password: bcrypt.hashSync( body.password,10 ),
-        role: body.role,
-    });
+            nombres: body.nombres,
+            apellidos: body.apellidos,
+            codigo: body.codigo,
+            email: body.email,
+            password: bcrypt.hashSync( body.password,10 ),
+            role: body.role,
+        });
 
-    usuario.save( (err, usuarioDB) => {
+        usuario.save( (err, usuarioDB) => {
 
-        if ( err ) {
-            return res.status( 400 ).json( {
-                ok: false,
-                err
+            if ( err ) {
+                return res.status( 400 ).json( {
+                    ok: false,
+                    err
+                });
+            }
+
+
+            // usuario.password = null;
+
+
+            res.json({
+                ok: true,
+                usuario: usuarioDB
             });
-        }
-
-        res.json({
-            ok: true,
-            usuario: usuarioDB
         });
     });
-});
 
 
 //PETICIÓN PUT
@@ -109,7 +113,7 @@ app.put('/update/:id', function (req, res, next) {
 
 //PETICIÓN DELETE
     // app.delete('/usuario/:id', [verificaToken], function (req, res) {
-    app.delete('/delete/:id', function (req, res, next) {
+    app.delete('/usuario/:id', function (req, res, next) {
         let id = req.params.id;
         let cambiarEstado = {
             estado: false
