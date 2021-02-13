@@ -6,7 +6,7 @@ const app = express();
 
 
 
-app.post('/login', function (req, res)  {
+app.post('/user/login', function (req, res)  {
 
     let body = req.body;
 

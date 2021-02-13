@@ -20,6 +20,7 @@
     "mongoose": "^5.11.13",
     "mongoose-unique-validator": "^2.0.3",
     "moongoose": "0.0.5",
+    "nodemon": "^2.0.7",
     "underscore": "^1.12.0"
   }
 }

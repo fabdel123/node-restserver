@@ -2,15 +2,12 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
-
-// const { verificaToken } = require('../middlewares/autenticacion');
-
 const app = express();
-
+// const { verificaToken } = require('../middlewares/autenticacion');
 
 //PETICIÓN GET
 // app.get('/usuario', verificaToken, (req, res) => {
-   app.get('/usuario', function (req, res, next)  {
+   app.get('/user', function (req, res)  {
 
     // Controla desde que pagina envía la paginación
     let desde = req.query.desde || 0;
@@ -48,7 +45,7 @@ const app = express();
 });
 // PETICIÓN POST
 // app.post('/usuario', verificaToken, function(req, res) {
-    app.post('/usuario', function (req, res) {
+    app.post('/user/create', function (req, res) {
 
         let body = req.body;
 
@@ -85,41 +82,47 @@ const app = express();
 
 //PETICIÓN PUT
 // app.put('/usuario/:id', [verificaToken], function (req, res) {
-app.put('/update/:id', function (req, res, next) {
+    app.put('/user/update/:id', function (req, res) {
 
-    let id = req.params.id;
-    let body = _.pick( req.body, ['nombres', 'apellidos', 'email', 'codigo', 'role', 'estado'] );
+        // const user = {
+        //     nombres: req.body.nombres || req.usuario.nombres,
+        //     apellidos: req.body.apellidos || req.usuario.apellidos,
+        //     email : req.body.email  || req.usuario.email,
+        //     password : req.body.password  || req.usuario.email,
+        // }
 
+        let _id = req.params.id;
+        let body = _.pick( req.body, ['nombres', 'apellidos', 'email', 'codigo', 'role', 'estado'] );
 
-    Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
+        Usuario.findByIdAndUpdate( _id, body, { new: true }, ( err, usuarioDB ) => {
 
-        if ( err ) {
-            return res.status( 400 ).json( {
-                ok: false,
-                err
+            if ( err ) {
+                return res.status( 400 ).json( {
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+               ok: true,
+               usuario: usuarioDB
             });
-        }
 
-        res.json({
-           ok: true,
-           usuario: usuarioDB
         });
 
     });
 
 
-});
-
-
 //PETICIÓN DELETE
     // app.delete('/usuario/:id', [verificaToken], function (req, res) {
-    app.delete('/usuario/:id', function (req, res, next) {
+    app.delete('/delete/:id', function ( req, res ) {
         let id = req.params.id;
         let cambiarEstado = {
             estado: false
         };
 
         Usuario.findByIdAndUpdate(id, cambiarEstado, { new: true }, (err, estadoUsuario) => {
+        // Usuario.findByIdAndUpdate( id, { new: true }, ( err, estadoUsuario ) => {
 
             res.json({
                 ok: true,
